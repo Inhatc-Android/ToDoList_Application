@@ -33,7 +33,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/join_name"
+                android:id="@+id/joinNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="이름"
@@ -48,7 +48,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/join_email"
+                    android:id="@+id/joinEmailText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
@@ -61,7 +61,7 @@
                     android:singleLine="true" />
 
                 <Button
-                    android:id="@+id/check_button"
+                    android:id="@+id/emailCheckButton"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/join_password"
+                android:id="@+id/joinPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="비밀번호"
@@ -83,7 +83,7 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/join_pwck"
+                android:id="@+id/joinPasswordCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="비밀번호확인"
@@ -99,24 +99,24 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/delete"
+                    android:id="@+id/cancelButton"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:text="로그인"
+                    android:text="취소"
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/join_button"
+                    android:id="@+id/joinButton"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:layout_weight="1"
-                    android:text="로그인"
+                    android:text="회원가입"
                     android:textStyle="bold" />
             </LinearLayout>
 
