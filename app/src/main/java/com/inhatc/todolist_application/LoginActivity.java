@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -27,7 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
-
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
@@ -35,6 +36,11 @@ public class LoginActivity extends AppCompatActivity {
     private static final int code = 9001;
     private EditText emailEditText;
     private EditText passwordEditText;
+    ImageView im;
+    Button btn;
+    EditText ans;
+
+    String answer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
+        // Google 로그인을 위한 옵션 설정
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -51,15 +58,33 @@ public class LoginActivity extends AppCompatActivity {
 
         emailEditText = (EditText) findViewById(R.id.email);
         passwordEditText = (EditText) findViewById(R.id.password);
-
+        im = (ImageView)findViewById(R.id.capImage);
+        btn = (Button)findViewById(R.id.capButton);
+        ans = (EditText) findViewById(R.id.capText);
         Button signInButton = (Button) findViewById(R.id.emailSignInButton);
         Button signUpButton = (Button) findViewById(R.id.emailSignUpButton);
         SignInButton googleLoginButton = findViewById(R.id.googleLoginButton);
 
+        btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Captcha c = new MathCaptcha(300, 100, MathCaptcha.MathOptions.PLUS_MINUS_MULTIPLY);
+                im.setImageBitmap(c.image);
+                im.setLayoutParams(new LinearLayout.LayoutParams(c.width * 2, c.height * 2));
+                answer = c.answer;
+            }
+        });
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emailLogin();
+                String enteredAnswer = ans.getText().toString().trim();
+                String captchaAnswer = answer;
+
+                if (enteredAnswer.equals(captchaAnswer)) {
+                    emailLogin();
+                } else {
+                    Toast.makeText(LoginActivity.this, "캡챠를 정확히 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -79,11 +104,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // 구글로그인 버튼 응답
+        // 구글 로그인 버튼 응답
         if (requestCode == code) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -91,13 +117,12 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-
+                // 구글 로그인 실패
             }
         }
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -109,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                             String userEmail = acct.getEmail();
                             String uid = auth.getUid();
 
+                            // 사용자 정보를 HashMap에 저장
                             HashMap<Object, String> hashMap = new HashMap<>();
                             hashMap.put("email", userEmail);
                             hashMap.put("name", userName);
@@ -124,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
                             // 로그인 실패
                             Toast.makeText(LoginActivity.this, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
     }
@@ -140,9 +165,11 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        // 로그인 성공
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
                     } else {
+                        // 로그인 실패
                         Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }

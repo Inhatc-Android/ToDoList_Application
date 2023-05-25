@@ -33,7 +33,7 @@ public class JoinActivity extends AppCompatActivity {
     private EditText passwordText;
     private EditText passwordCheckText;
     private Button emailCheckButton;
-    private Button cancleButton;
+    private Button cancelButton;
     private Button joinButton;
 
     @Override
@@ -49,7 +49,7 @@ public class JoinActivity extends AppCompatActivity {
         passwordCheckText = (EditText) findViewById(R.id.joinPasswordCheck);
 
         emailCheckButton = (Button) findViewById(R.id.emailCheckButton);
-        cancleButton = (Button) findViewById(R.id.cancelButton);
+        cancelButton = (Button) findViewById(R.id.cancelButton);
         joinButton = (Button) findViewById(R.id.joinButton);
 
         emailCheckButton.setOnClickListener(new View.OnClickListener(){
@@ -63,7 +63,7 @@ public class JoinActivity extends AppCompatActivity {
                 }
             }
         });
-        cancleButton.setOnClickListener(new View.OnClickListener(){
+        cancelButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(JoinActivity.this, LoginActivity.class);
@@ -135,6 +135,4 @@ public class JoinActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 }

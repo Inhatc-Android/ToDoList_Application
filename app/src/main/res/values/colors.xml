@@ -10,4 +10,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="main_color">#434c63</color>
+    <color name="list_color_done">#A9EFBF</color>
+    <color name="list_color_default">#F7EEDE</color>
+    <color name="light_main_color">#CFD7EB</color>
 </resources>
