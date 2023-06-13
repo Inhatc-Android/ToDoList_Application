@@ -135,13 +135,13 @@ public class LoginActivity extends AppCompatActivity {
                             String uid = auth.getUid();
 
                             // 사용자 정보를 HashMap에 저장
-                            HashMap<Object, String> hashMap = new HashMap<>();
+                            HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("email", userEmail);
                             hashMap.put("name", userName);
 
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference reference = database.getReference("Users");
-                            reference.child(uid).setValue(hashMap);
+                            reference.child(uid).updateChildren(hashMap);
 
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);

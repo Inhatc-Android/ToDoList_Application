@@ -2,6 +2,8 @@ package com.inhatc.todolist_application;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -167,6 +169,9 @@ public class HomeActivity extends AppCompatActivity {
 
     // 작성 다이얼로그를 표시하는 메서드입니다.
     private void showWriteDialog(Context context) {
+        writeDialog = new Dialog(context);
+        writeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        writeDialog.setContentView(R.layout.dialog_write);
         writeDialog.show();
 
         EditText writeTitle = writeDialog.findViewById(R.id.writeTitle);
